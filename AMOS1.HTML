@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entertainment Hub</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f0f0f;
+color:white;
+}
+
+header{
+background:black;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+header h1{
+color:red;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin:0 10px;
+font-weight:bold;
+}
+
+.hero{
+padding:80px 20px;
+text-align:center;
+background:linear-gradient(to right,#ff0000,#000000);
+}
+
+.hero h2{
+font-size:45px;
+margin-bottom:20px;
+}
+
+.hero p{
+font-size:20px;
+margin-bottom:20px;
+}
+
+.hero button{
+padding:15px 30px;
+font-size:18px;
+background:red;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+.section-title{
+padding:20px;
+font-size:30px;
+font-weight:bold;
+}
+
+.movies{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+padding:20px;
+}
+
+.movie-card{
+background:#1a1a1a;
+border-radius:15px;
+overflow:hidden;
+transition:0.3s;
+}
+
+.movie-card:hover{
+transform:scale(1.03);
+}
+
+.movie-card img{
+width:100%;
+height:350px;
+object-fit:cover;
+}
+
+.movie-info{
+padding:15px;
+}
+
+.movie-info h3{
+margin-bottom:10px;
+}
+
+.movie-info p{
+font-size:14px;
+margin-bottom:10px;
+color:#ccc;
+}
+
+.buttons{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.watch-btn{
+background:red;
+}
+
+.download-btn{
+background:green;
+}
+
+.buttons button{
+padding:12px;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
+}
+
+.subscription{
+background:#181818;
+padding:40px 20px;
+text-align:center;
+}
+
+.subscription h2{
+margin-bottom:20px;
+font-size:35px;
+}
+
+.subscription input,
+.subscription select{
+width:300px;
+padding:15px;
+margin:10px;
+border:none;
+border-radius:10px;
+font-size:16px;
+}
+
+.subscription button{
+padding:15px 30px;
+background:red;
+color:white;
+border:none;
+border-radius:10px;
+font-size:18px;
+cursor:pointer;
+}
+
+.admin-panel{
+padding:40px 20px;
+background:#101010;
+}
+
+.admin-panel h2{
+margin-bottom:20px;
+}
+
+.admin-panel textarea{
+width:100%;
+height:150px;
+padding:15px;
+background:#222;
+color:white;
+border:none;
+border-radius:10px;
+margin-bottom:20px;
+}
+
+footer{
+background:black;
+text-align:center;
+padding:20px;
+margin-top:40px;
+}
+
+.video-player{
+width:100%;
+height:250px;
+background:black;
+}
+
+@media(max-width:768px){
+.hero h2{
+font-size:30px;
+}
+
+.subscription input,
+.subscription select{
+width:100%;
+}
+}
+</style>
+
+</head>
+<body>
+
+<header>
+<h1>Entertainment Hub</h1>
+
+<nav>
+<a href="#movies">Movies</a>
+<a href="#subscription">Subscription</a>
+<a href="#admin">Admin</a>
+</nav>
+</header>
+
+<section class="hero">
+<h2>Unlimited Entertainment</h2>
+
+<p>
+Watch Movies at 1200 UGX for 12 Hours
+OR Download at 500 UGX
+</p>
+
+<button onclick="subscribeNow()">
+Subscribe Now
+</button>
+</section>
+
+<h2 class="section-title" id="movies">
+Trending Movies
+</h2>
+
+<section class="movies" id="movies-container">
+</section>
+
+<section class="subscription" id="subscription">
+
+<h2>Mobile Money Subscription</h2>
+
+<input type="text"
+id="phone"
+placeholder="Enter Phone Number">
+
+<br>
+
+<select id="network">
+<option>MTN Mobile Money</option>
+<option>Airtel Money</option>
+</select>
+
+<br>
+
+<button onclick="paySubscription()">
+Pay 1200 UGX
+</button>
+
+</section>
+
+<section class="admin-panel" id="admin">
+
+<h2>Admin Movie Upload Section</h2>
+
+<p>
+Paste your movie video link below:
+</p>
+
+<textarea id="movieLink"
+placeholder="Paste movie video URL here">
+</textarea>
+
+<button onclick="uploadMovie()">
+Upload Movie
+</button>
+
+<p id="uploadStatus"></p>
+
+</section>
+
+<footer>
+<p>
+© 2026 Entertainment Hub
+</p>
+</footer>
+
+<script>
+
+const movies = [
+
+{
+title:"Action Movie",
+image:"https://picsum.photos/300/400?1",
+description:"Best action movie.",
+video:"d:\DR ARONSON_files\DR ARONSON\DR ARONSON_files\iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii@_files\FEARLESS KUNGUFU KING_Vj Confidential.mkv"
+},
+
+{
+title:"Comedy Movie",
+image:"https://picsum.photos/300/400?2",
+description:"d:\VIDEO TWAKPAT\WAR HORSE ONE_Vj Confidential.mp4"
+},
+
+{
+title:"Drama Movie",
+image:"https://picsum.photos/300/400?3",
+description:"d:\back up 2026\￿\The New Girl (Vj Dimpoz)\THE NEW GIRL SN1 - EP1_Vj Dimpoz.mkv"
+},
+
+{
+title:"Adventure Movie",
+image:"https://picsum.photos/300/400?4",
+description:"Adventure and action packed.",
+video:"e:\LCI\S3 TERM I PRAC SHIFT I\YAKU JEVIS\FIST FISH VJ.mp4"
+}
+
+];
+
+const moviesContainer =
+document.getElementById("movies-container");
+
+for(let i = 0; i < 130; i++){
+
+movies.forEach(movie => {
+
+moviesContainer.innerHTML += `
+
+<div class="movie-card">
+
+<img src="${movie.image}" alt="movie">
+
+<div class="movie-info">
+
+<h3>${movie.title} ${i+1}</h3>
+
+<p>${movie.description}</p>
+
+<video class="e:\a22fcd2ec28c9f6a6dddcbc114c25524_1781114382015.mp4" controls>
+<source src="${movie.video}" type="video/mp4">
+</video>
+
+<div class="buttons">
+
+<button class="watch-btn"
+onclick="watchMovie()">
+Watch - 1200 UGX
+</button>
+
+<button class="download-btn"
+onclick="downloadMovie()">
+Download - 500 UGX
+</button>
+
+</div>
+</div>
+</div>
+
+`;
+
+});
+
+}
+
+function subscribeNow(){
+
+alert(
+"Subscribe for 12 hours access at 1200 UGX"
+);
+
+}
+
+function watchMovie(){
+
+alert(
+"Payment request sent. After payment you can watch for 12 hours."
+);
+
+}
+
+function downloadMovie(){
+
+alert(
+"Pay 500 UGX to download this movie."
+);
+
+}
+
+function paySubscription(){
+
+const phone =
+document.getElementById("phone").value;
+
+const network =
+document.getElementById("network").value;
+
+if(phone === ""){
+
+alert("Enter phone number");
+
+return;
+
+}
+
+alert(
+`Payment request of 1200 UGX sent to ${phone} using ${network}`
+);
+
+// REAL PAYMENT API GOES HERE
+// MTN MOMO API
+// AIRTEL MONEY API
+
+console.log(
+"Money sent to admin account"
+);
+
+}
+
+function uploadMovie(){
+
+const movieLink =
+document.getElementById("movieLink").value;
+
+if(movieLink === ""){
+
+alert(
+"Paste movie link first"
+);
+
+return;
+
+}
+
+const newMovie = `
+
+<div class="movie-card">
+
+<video class="e:\Queen Seon Deok Ep4 Vj Conf - Shortcut.lnk" controls>
+<source src="${movieLink}" type="video/mp4">
+</video>
+
+<div class="movie-info">
+
+<h3>New Uploaded Movie</h3>
+
+<p>Uploaded by admin.</p>
+
+<div class="buttons">
+
+<button class="watch-btn">
+Watch - 1200 UGX
+</button>
+
+<button class="download-btn">
+Download - 500 UGX
+</button>
+
+</div>
+
+</div>
+</div>
+
+`;
+
+moviesContainer.innerHTML += newMovie;
+
+document.getElementById(
+"uploadStatus"
+).innerHTML =
+"Movie uploaded successfully";
+
+document.getElementById(
+"movieLink"
+).value = "";
+
+}
+
+</script>
+
+</body>
+</html>
